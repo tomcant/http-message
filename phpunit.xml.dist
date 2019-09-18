@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="unit">
+            <directory>tests</directory>
+        </testsuite>
+
+        <testsuite name="http-factory-tests">
+            <directory>./vendor/http-interop/http-factory-tests/test</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <const name="STREAM_FACTORY" value="SimpleWeb\Http\Message\Factory\StreamFactory"/>
+        <const name="UPLOADED_FILE_FACTORY" value="SimpleWeb\Http\Message\Factory\UploadedFileFactory"/>
+    </php>
+</phpunit>
