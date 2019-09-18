@@ -56,6 +56,10 @@ final class UploadedFile implements UploadedFileInterface
      */
     public function getStream(): StreamInterface
     {
+        if (!$this->stream instanceof StreamInterface) {
+            throw new \RuntimeException('The uploaded file has been moved.');
+        }
+
         return $this->stream;
     }
 
@@ -89,15 +93,5 @@ final class UploadedFile implements UploadedFileInterface
     public function getClientMediaType(): ?string
     {
         return $this->clientMediaType;
-    }
-
-    /**
-     * @return void
-     */
-    private function throwIfStreamIsNotAvailable(): void
-    {
-        if (!$this->stream instanceof StreamInterface) {
-            throw new \RuntimeException('');
-        }
     }
 }
