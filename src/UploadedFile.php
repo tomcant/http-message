@@ -4,6 +4,7 @@ namespace SimpleWeb\Http\Message;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use SimpleWeb\Http\Message\Factory\StreamFactory;
 
 final class UploadedFile implements UploadedFileInterface
 {
@@ -21,6 +22,9 @@ final class UploadedFile implements UploadedFileInterface
 
     /** @var string|null */
     private $clientMediaType;
+
+    /** @var bool */
+    private $moved = false;
 
     /**
      * @param StreamInterface $stream
@@ -48,7 +52,30 @@ final class UploadedFile implements UploadedFileInterface
      */
     public function moveTo($targetPath): void
     {
+        if ($this->moved) {
+            throw new \RuntimeException('The uploaded file has already been moved.');
+        }
 
+        if ($this->error !== \UPLOAD_ERR_OK) {
+            throw new \RuntimeException('There was an error during upload and the file cannot be moved.');
+        }
+
+        if (!\is_string($targetPath) || '' === $targetPath) {
+            throw new \InvalidArgumentException('The target path must be a non-empty string.');
+        }
+
+        $directory = \dirname($targetPath);
+
+        if (!\is_writable($directory)) {
+            throw new \RuntimeException('The target path directory is not writable.');
+        }
+
+        $this->writeStreamToFile($targetPath);
+
+        $this->stream->close();
+        $this->stream = null;
+
+        $this->moved = true;
     }
 
     /**
@@ -57,7 +84,7 @@ final class UploadedFile implements UploadedFileInterface
     public function getStream(): StreamInterface
     {
         if (!$this->stream instanceof StreamInterface) {
-            throw new \RuntimeException('The uploaded file has been moved.');
+            throw new \RuntimeException('The uploaded file stream is not available.');
         }
 
         return $this->stream;
@@ -93,5 +120,25 @@ final class UploadedFile implements UploadedFileInterface
     public function getClientMediaType(): ?string
     {
         return $this->clientMediaType;
+    }
+
+    /**
+     * @param string $path
+     */
+    private function writeStreamToFile(string $path): void
+    {
+        $source = $this->getStream();
+
+        if ($source->isSeekable()) {
+            $source->rewind();
+        }
+
+        $target = (new StreamFactory())->createStreamFromFile($path, 'r+');
+
+        while (!$source->eof()) {
+            $target->write($source->read(4096));
+        }
+
+        $target->close();
     }
 }
