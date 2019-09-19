@@ -133,7 +133,7 @@ final class UploadedFile implements UploadedFileInterface
             $source->rewind();
         }
 
-        $target = (new StreamFactory())->createStreamFromFile($path, 'r+');
+        $target = (new StreamFactory())->createStreamFromFile($path, 'wb');
 
         while (!$source->eof()) {
             $target->write($source->read(4096));
