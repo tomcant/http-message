@@ -39,12 +39,10 @@ final class Stream implements StreamInterface
      */
     public function close(): void
     {
-        if (!$this->isResourceAvailable()) {
-            return;
+        if ($this->isResourceAvailable()) {
+            \fclose($this->resource);
+            $this->detach();
         }
-
-        \fclose($this->resource);
-        $this->detach();
     }
 
     /**
