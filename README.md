@@ -1,6 +1,7 @@
 # HTTP Message
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.com/tomcant/http-message.svg?branch=master)](https://travis-ci.com/tomcant/http-message)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This is a simple HTTP message implementation that will eventually conform with [PSR-7](https://www.php-fig.org/psr/psr-7/) and [PSR-17](https://www.php-fig.org/psr/psr-17/).
 
