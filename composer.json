@@ -1,6 +1,7 @@
 {
     "name": "tomcant/http-message",
     "description": "Simple HTTP message implementation that conforms (eventually) with PSR-7 and PSR-17.",
+    "keywords": ["psr-7", "psr-17", "http", "message"],
     "type": "library",
     "license": "MIT",
     "authors": [
