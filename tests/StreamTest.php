@@ -157,6 +157,14 @@ class StreamTest extends TestCase
         $this->assertEquals(1, \ftell($this->resource));
     }
 
+    public function test_it_throws_a_RuntimeException_when_seeking_to_an_unseekable_position()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Failed to seek to the specified position.');
+
+        $this->stream->seek(-1);
+    }
+
     public function test_it_throws_a_RuntimeException_when_seeking_on_a_closed_stream()
     {
         \fclose($this->resource);
