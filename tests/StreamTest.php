@@ -243,6 +243,14 @@ class StreamTest extends TestCase
         $this->assertEquals('A string', $this->stream->read(\strlen('A string')));
     }
 
+    public function test_it_throws_a_RuntimeException_when_failing_to_read_from_a_stream()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Failed to read from the stream resource.');
+
+        $this->stream->read(-1);
+    }
+
     public function test_it_throws_a_RuntimeException_when_reading_from_an_unreadable_stream()
     {
         $stream = new Stream(\fopen('php://stdout', 'w'));

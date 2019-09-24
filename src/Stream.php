@@ -191,10 +191,16 @@ final class Stream implements StreamInterface
             throw new \RuntimeException('The stream resource is not readable.');
         }
 
-        $data = \fread($this->resource, $length);
+        $previousThrowable = null;
+
+        try {
+            $data = \fread($this->resource, $length);
+        } catch (\Throwable $previousThrowable) {
+            $data = false;
+        }
 
         if (false === $data) {
-            throw new \RuntimeException('Failed to read from the stream resource.');
+            throw new \RuntimeException('Failed to read from the stream resource.', null, $previousThrowable);
         }
 
         return $data;
