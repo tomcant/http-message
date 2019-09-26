@@ -3,6 +3,7 @@
 namespace Tests\SimpleWeb\Http\Message;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
 use SimpleWeb\Http\Message\Stream;
 
 class StreamTest extends TestCase
@@ -28,7 +29,7 @@ class StreamTest extends TestCase
 
     public function test_it_can_be_instantiated_with_a_valid_resource()
     {
-        $this->assertInstanceOf(Stream::class, $this->stream);
+        $this->assertInstanceOf(StreamInterface::class, $this->stream);
     }
 
     public function test_it_cannot_be_instantiated_with_an_invalid_resource()
