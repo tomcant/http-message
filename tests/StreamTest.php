@@ -13,13 +13,13 @@ class StreamTest extends TestCase
     /** @var Stream */
     private $stream;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->resource = \fopen('php://memory', 'w');
         $this->stream = new Stream($this->resource);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (\is_resource($this->resource)) {
             \fclose($this->resource);

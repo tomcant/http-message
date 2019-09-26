@@ -19,7 +19,7 @@ class UploadedFileTest extends TestCase
     /** @var string */
     private $targetPath;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->stream = new Stream(\fopen('php://memory', 'w'));
         $this->uploadedFile = new UploadedFile($this->stream);
