@@ -6,6 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 use SimpleWeb\Http\Message\Stream;
 
+/**
+ * @covers \SimpleWeb\Http\Message\Stream
+ */
 class StreamTest extends TestCase
 {
     /** @var resource */

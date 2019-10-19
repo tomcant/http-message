@@ -8,6 +8,9 @@ use Psr\Http\Message\UploadedFileInterface;
 use SimpleWeb\Http\Message\Stream;
 use SimpleWeb\Http\Message\UploadedFile;
 
+/**
+ * @covers \SimpleWeb\Http\Message\UploadedFile
+ */
 class UploadedFileTest extends TestCase
 {
     /** @var Stream */
